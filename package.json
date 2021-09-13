@@ -13,6 +13,7 @@
     },
     "husky": {
         "hooks": {
+            "src/**/*.{js,jsx,ts,tsx}": "eslint",
             "pre-commit": "npm run typecheck && lint-staged"
         }
     },
