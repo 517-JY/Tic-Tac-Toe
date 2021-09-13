@@ -1,12 +1,13 @@
 // import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import {
    useFonts,
    DeliusUnicase_400Regular,
    DeliusUnicase_700Bold,
 } from '@expo-google-fonts/delius-unicase';
 import AppLoading from 'expo-app-loading';
+import { Text } from '@components';
 // import { Game, Home } from '@screens';
 // import Navigaor from '@config/navigator';
 
@@ -24,8 +25,12 @@ export default function App() {
          <Home />
          <Game /> */}
 
-         <Text style={{ fontSize: 25, fontFamily: 'DeliusUnicase_400Regular' }}>
-            Hello World
+         <Text
+            onPress={() => alert(true)}
+            style={{ fontSize: 25 }}
+            // weight="700"
+         >
+            Hello World <Text weight="400">test</Text>
          </Text>
       </View>
    );
