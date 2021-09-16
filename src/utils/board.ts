@@ -37,6 +37,7 @@ export const getAvailableMoves = (state: BoardState): Moves[] => {
    return moves;
 };
 
+// TODO: Recap
 export const isTerminal = (state: BoardState): BoardResult | false => {
    if (isEmpty(state)) return false;
    const winningLines = [
