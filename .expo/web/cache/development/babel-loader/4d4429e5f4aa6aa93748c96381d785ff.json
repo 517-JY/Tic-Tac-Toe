@@ -1,0 +1,1 @@
+{"ast":null,"code":"import App from \"./src/index\";\nexport default App;","map":{"version":3,"sources":["/Users/lidian/Desktop/Coding/Udemy/Tic-Tac-Toe/App.tsx"],"names":["App"],"mappings":"AAAA,OAAOA,GAAP;AACA,eAAeA,GAAf","sourcesContent":["import App from './src/index';\nexport default App;\n"]},"metadata":{},"sourceType":"module"}
