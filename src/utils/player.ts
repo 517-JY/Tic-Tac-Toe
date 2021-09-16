@@ -32,7 +32,7 @@ export const getBestMove = (
             const child: BoardState = [...state];
             child[index] = 'x';
             // console.log(`Child board (x turn) (depth: ${depth})`);
-            printFormattedBoard(child);
+            // printFormattedBoard(child);
             const childValue = getBestMoveRecursive(
                child,
                false,
@@ -41,7 +41,8 @@ export const getBestMove = (
             );
 
             // console.log('childValue', childValue);
-            // best = Math.max(best, childValue);
+
+            best = Math.max(best, childValue);
 
             if (depth === 0) {
                childValues[childValue] = childValues[childValue]
@@ -66,7 +67,7 @@ export const getBestMove = (
             const child: BoardState = [...state];
             child[index] = 'o';
             // console.log(`Child board (o turn) (depth: ${depth})`);
-            printFormattedBoard(child);
+            // printFormattedBoard(child);
             const childValue = getBestMoveRecursive(
                child,
                true,
@@ -75,7 +76,7 @@ export const getBestMove = (
             );
 
             // console.log('childValue', childValue);
-            // best = Math.min(best, childValue);
+            best = Math.min(best, childValue);
 
             if (depth === 0) {
                childValues[childValue] = childValues[childValue]
