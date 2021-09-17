@@ -3,6 +3,7 @@ import { View, TouchableOpacity } from 'react-native';
 import Text from '../text/text';
 import { BoardResult, BoardState } from '@utils';
 import BoardLine from './board-line';
+import styles from './board.styles';
 
 type Cell = 'x' | 'o' | null;
 type BoardProps = {
@@ -22,41 +23,31 @@ export default function Board({
 }: BoardProps): ReactElement {
    return (
       <View
-         style={{
-            width: size,
-            height: size,
-            backgroundColor: 'grey',
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-         }}
+         style={[
+            styles.board,
+            {
+               width: size,
+               height: size,
+            },
+         ]}
       >
          {state.map((cell, index) => {
             return (
                <TouchableOpacity
                   disabled={cell !== null || disabled}
                   onPress={() => onCellPressed && onCellPressed(index)}
-                  style={{
-                     width: '33.333333%',
-                     height: '33.333333%',
-                     backgroundColor: 'white',
-                     borderWidth: 1,
-                     alignItems: 'center',
-                     justifyContent: 'center',
-                  }}
+                  style={[styles.cell, styles[`cell${index}` as 'cell']]}
                   key={index}
                >
-                  <Text style={{ fontSize: size / 8 }}>{cell}</Text>
+                  <Text style={[styles.cellText, { fontSize: size / 7 }]}>
+                     {cell}
+                  </Text>
                </TouchableOpacity>
             );
          })}
 
          {/* Display the BoardLine only if has a gameResult */}
-         {true && (
-            <BoardLine
-               size={size}
-               gameResult={{ winner: 'o', diagonal: 'MAIN', direction: 'D' }}
-            />
-         )}
+         {gameResult && <BoardLine size={size} gameResult={gameResult} />}
       </View>
    );
 }

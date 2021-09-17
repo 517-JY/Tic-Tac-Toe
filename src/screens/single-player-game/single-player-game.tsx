@@ -1,6 +1,6 @@
 import { GradientBackground } from '@components';
 import React, { ReactElement, useEffect, useState, useRef } from 'react';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, Dimensions } from 'react-native';
 import styles from './single-player-game.styles';
 import { Board } from '@components';
 import {
@@ -12,6 +12,9 @@ import {
    Cell,
    useSounds,
 } from '@utils';
+
+// get device dimensions
+const SCREEN_WIDTH = Dimensions.get('screen').width;
 
 export default function SinglePlayerGame(): ReactElement {
    // const b: BoardState = ['o', 'o', 'x', 'x', 'o', null, 'x', 'o', null];
@@ -136,7 +139,7 @@ export default function SinglePlayerGame(): ReactElement {
                }}
                state={state}
                gameResult={gameResult}
-               size={300}
+               size={SCREEN_WIDTH - 60}
             />
          </SafeAreaView>
       </GradientBackground>

@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect, useRef } from 'react';
 
 import { View, StyleSheet, Animated } from 'react-native';
 
-import { BoardResult } from '@utils';
+import { BoardResult, colors } from '@utils';
 
 type BoardLineProps = {
    size: number;
@@ -102,18 +102,18 @@ export default function BoardLine({
 const styles = StyleSheet.create({
    line: {
       position: 'absolute',
-      backgroundColor: '#D95F69',
+      backgroundColor: colors.redPink,
    },
    vLine: {
-      width: 3,
+      width: 4,
       //   height: '100%',
    },
    hLine: {
       //   width: '100%',
-      height: 3,
+      height: 4,
    },
    dLine: {
-      width: 3,
+      width: 4,
       top: 0,
       left: '50%',
    },
