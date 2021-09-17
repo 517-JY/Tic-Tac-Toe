@@ -6,13 +6,14 @@ import {
    createNativeStackNavigator,
    NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
-import { Home, SinglePlayerGame, Settings } from '@screens';
+import { Home, SinglePlayerGame, Settings, Login } from '@screens';
 import { colors } from '@utils';
 
 export type StackNavigatorParams = {
    Home: undefined;
    SinglePlayerGame: undefined;
    Settings: undefined;
+   Login: undefined;
 };
 
 const navigatorOptions: NativeStackNavigationOptions = {
@@ -52,6 +53,7 @@ export default function Navigator(): ReactElement {
                options={{ headerShown: true }}
             ></Stack.Screen>
             <Stack.Screen name="Settings" component={Settings}></Stack.Screen>
+            <Stack.Screen name="Login" component={Login}></Stack.Screen>
          </Stack.Navigator>
       </NavigationContainer>
    );
