@@ -1,6 +1,6 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect, useRef } from 'react';
 
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Animated } from 'react-native';
 
 import { BoardResult } from '@utils';
 
@@ -13,43 +13,75 @@ export default function BoardLine({
    size,
    gameResult,
 }: BoardLineProps): ReactElement {
+   // calculate the height of the digonal winning line
    const diagonalHeight = Math.sqrt(Math.pow(size, 2) + Math.pow(size, 2));
+
+   // create the animation component
+   const animationRef = useRef<Animated.Value>(new Animated.Value(0));
+
+   useEffect(() => {
+      Animated.timing(animationRef.current, {
+         toValue: 1,
+         duration: 800,
+         useNativeDriver: false,
+      }).start();
+   }, []);
+
    return (
       <>
          {gameResult && gameResult.column && gameResult.direction === 'V' && (
-            <View
+            <Animated.View
                style={[
                   styles.line,
                   styles.vLine,
                   {
                      left: `${33.333333 * gameResult.column - 16.666666}%`,
+                     height: animationRef.current.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: ['0%', '100%'],
+                     }),
                   },
                ]}
-            ></View>
+            ></Animated.View>
          )}
          {gameResult && gameResult.row && gameResult.direction === 'H' && (
-            <View
+            <Animated.View
                style={[
                   styles.line,
                   styles.hLine,
                   {
                      top: `${33.333333 * gameResult.row - 16.666666}%`,
+                     width: animationRef.current.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: ['0%', '100%'],
+                     }),
                   },
                ]}
-            ></View>
+            ></Animated.View>
          )}
          {gameResult && gameResult.diagonal && gameResult.direction === 'D' && (
-            <View
+            <Animated.View
                style={[
                   styles.line,
                   styles.dLine,
                   {
-                     height: diagonalHeight,
+                     height: animationRef.current.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [0, diagonalHeight],
+                     }),
                      // Do rotation with transform
                      transform: [
                         {
+                           //    translateY: -(diagonalHeight - size) / 2,
                            // Move the diagonal boardLine up
-                           translateY: -(diagonalHeight - size) / 2,
+                           // For the animation, the move value should be animated
+                           translateY: animationRef.current.interpolate({
+                              inputRange: [0, 1],
+                              outputRange: [
+                                 size / 2,
+                                 -(diagonalHeight - size) / 2,
+                              ],
+                           }),
                         },
 
                         {
@@ -61,7 +93,7 @@ export default function BoardLine({
                      ],
                   },
                ]}
-            ></View>
+            ></Animated.View>
          )}
       </>
    );
@@ -70,18 +102,18 @@ export default function BoardLine({
 const styles = StyleSheet.create({
    line: {
       position: 'absolute',
-      backgroundColor: '#f03',
+      backgroundColor: '#D95F69',
    },
    vLine: {
-      width: 2,
-      height: '100%',
+      width: 3,
+      //   height: '100%',
    },
    hLine: {
-      width: '100%',
-      height: 2,
+      //   width: '100%',
+      height: 3,
    },
    dLine: {
-      width: 2,
+      width: 3,
       top: 0,
       left: '50%',
    },
