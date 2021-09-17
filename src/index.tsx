@@ -6,12 +6,15 @@ import { AppBootstrap } from '@components';
 import Navigator from '@config/navigator';
 // import { Game, Home } from '@screens';
 // import Navigaor from '@config/navigator';
+import { SettingsProvider } from '@contexts/settings-context';
 
 export default function App(): ReactElement {
    // if (!fontLoaded) return <AppLoading />;
    return (
       <AppBootstrap>
-         <Navigator />
+         <SettingsProvider>
+            <Navigator />
+         </SettingsProvider>
       </AppBootstrap>
    );
 }

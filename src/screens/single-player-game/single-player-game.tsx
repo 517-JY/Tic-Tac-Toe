@@ -12,6 +12,7 @@ import {
    Cell,
    useSounds,
 } from '@utils';
+import { difficulties, useSettings } from '@contexts/settings-context';
 
 // get device dimensions
 const SCREEN_WIDTH = Dimensions.get('screen').width;
@@ -47,6 +48,8 @@ export default function SinglePlayerGame(): ReactElement {
    const playSound = useSounds();
 
    const gameResult = isTerminal(state);
+
+   const { settings } = useSettings();
 
    const insertCell = (cell: number, symbol: 'x' | 'o'): void => {
       const stateCopy: BoardState = [...state];
@@ -129,7 +132,13 @@ export default function SinglePlayerGame(): ReactElement {
                // Set turn to "HUMAN"
                setTurn('HUMAN');
             } else {
-               const best = getBestMove(state, !isHumanMaximizing, 0, 1);
+               const best = getBestMove(
+                  state,
+                  !isHumanMaximizing,
+                  0,
+                  // Passing : String  ->  Using :Int
+                  parseInt(settings ? settings.difficulty : '1')
+               );
                insertCell(best, isHumanMaximizing ? 'o' : 'x');
                setTurn('HUMAN');
             }
@@ -147,7 +156,10 @@ export default function SinglePlayerGame(): ReactElement {
       <GradientBackground>
          <SafeAreaView style={styles.container}>
             <View>
-               <Text style={styles.difficulty}>Difficulty: Easy</Text>
+               <Text style={styles.difficulty}>
+                  Difficulty:{' '}
+                  {settings ? difficulties[settings.difficulty] : 'Easy'}
+               </Text>
             </View>
 
             <View style={styles.results}>
