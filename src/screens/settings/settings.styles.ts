@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
       borderRadius: 9,
    },
    choiceText: {
-      color: colors.wallBrown,
+      color: colors.cream,
    },
    switchField: {
       flexDirection: 'row',

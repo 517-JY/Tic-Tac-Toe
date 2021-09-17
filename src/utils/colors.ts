@@ -10,6 +10,9 @@ const colors = {
    wallBrown: '#8C5C03',
    inkBlue: '#003F63',
    nightBlack: '#1A1A1A',
+   smokeBlue: '#768591',
+   lightPink: '#C3B2AF',
+   lightBlue: '#E6F3FF',
 };
 
 export default colors;
