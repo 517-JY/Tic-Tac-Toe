@@ -38,6 +38,12 @@ export default function SinglePlayerGame(): ReactElement {
 
    const [isHumanMaximizing, setIsHumanMaximizing] = useState<boolean>(true);
 
+   const [gamesCount, setGamesCount] = useState({
+      wins: 0,
+      losses: 0,
+      draws: 0,
+   });
+
    const playSound = useSounds();
 
    const gameResult = isTerminal(state);
@@ -80,24 +86,32 @@ export default function SinglePlayerGame(): ReactElement {
       return 'DRAW';
    };
 
+   const newGame = () => {
+      setState([null, null, null, null, null, null, null, null, null]);
+      setTurn(Math.random() < 0.5 ? 'HUMAN' : 'BOT');
+   };
+
    useEffect(() => {
       if (gameResult) {
          // TODO: Check - handle when game is over
          const winner = getWinner(gameResult.winner);
 
          if (winner === 'HUMAN') {
+            // alert('You Won!');
             playSound('win');
-            alert('You Won!');
+            setGamesCount({ ...gamesCount, wins: gamesCount.wins + 1 });
          }
 
          if (winner === 'BOT') {
+            // alert('You Lost! Try it again!');
             playSound('loss');
-            alert('You Lost! Try it again!');
+            setGamesCount({ ...gamesCount, losses: gamesCount.losses + 1 });
          }
 
          if (winner === 'DRAW') {
+            // alert("It's a Draw!");
             playSound('draw');
-            alert("It's a Draw!");
+            setGamesCount({ ...gamesCount, draws: gamesCount.draws + 1 });
          }
       } else {
          if (turn === 'BOT') {
@@ -115,7 +129,7 @@ export default function SinglePlayerGame(): ReactElement {
                // Set turn to "HUMAN"
                setTurn('HUMAN');
             } else {
-               const best = getBestMove(state, !isHumanMaximizing, 0, -1);
+               const best = getBestMove(state, !isHumanMaximizing, 0, 1);
                insertCell(best, isHumanMaximizing ? 'o' : 'x');
                setTurn('HUMAN');
             }
@@ -133,23 +147,23 @@ export default function SinglePlayerGame(): ReactElement {
       <GradientBackground>
          <SafeAreaView style={styles.container}>
             <View>
-               <Text style={styles.difficulty}>Difficulty: Hard</Text>
+               <Text style={styles.difficulty}>Difficulty: Easy</Text>
             </View>
 
             <View style={styles.results}>
                <View style={styles.resultsBox}>
                   <Text style={styles.resultsTitle}>Wins</Text>
-                  <Text style={styles.resultsCount}>0</Text>
+                  <Text style={styles.resultsCount}>{gamesCount.wins}</Text>
                </View>
 
                <View style={styles.resultsBox}>
                   <Text style={styles.resultsTitle}>Draws</Text>
-                  <Text style={styles.resultsCount}>0</Text>
+                  <Text style={styles.resultsCount}>{gamesCount.draws}</Text>
                </View>
 
                <View style={styles.resultsBox}>
                   <Text style={styles.resultsTitle}>Losses</Text>
-                  <Text style={styles.resultsCount}>0</Text>
+                  <Text style={styles.resultsCount}>{gamesCount.losses}</Text>
                </View>
             </View>
 
@@ -163,10 +177,17 @@ export default function SinglePlayerGame(): ReactElement {
                size={SCREEN_WIDTH - 60}
             />
 
-            <View style={styles.modal}>
-               <Text style={styles.modalText}>You Won</Text>
-               <Button title="Play Again" />
-            </View>
+            {/* Only render the modal when the game result exists */}
+            {gameResult && (
+               <View style={styles.modal}>
+                  <Text style={styles.modalText}>
+                     {getWinner(gameResult.winner) === 'HUMAN' && 'You Won'}
+                     {getWinner(gameResult.winner) === 'BOT' && 'You Lost'}
+                     {getWinner(gameResult.winner) === 'DRAW' && "It's a Draw"}
+                  </Text>
+                  <Button onPress={newGame} title="Play Again" />
+               </View>
+            )}
          </SafeAreaView>
       </GradientBackground>
    );
