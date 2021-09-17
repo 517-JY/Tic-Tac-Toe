@@ -1,8 +1,8 @@
 import { GradientBackground } from '@components';
 import React, { ReactElement, useEffect, useState, useRef } from 'react';
-import { SafeAreaView, Dimensions } from 'react-native';
+import { View, SafeAreaView, Dimensions } from 'react-native';
 import styles from './single-player-game.styles';
-import { Board } from '@components';
+import { Board, Text, Button } from '@components';
 import {
    printFormattedBoard,
    BoardState,
@@ -132,6 +132,27 @@ export default function SinglePlayerGame(): ReactElement {
    return (
       <GradientBackground>
          <SafeAreaView style={styles.container}>
+            <View>
+               <Text style={styles.difficulty}>Difficulty: Hard</Text>
+            </View>
+
+            <View style={styles.results}>
+               <View style={styles.resultsBox}>
+                  <Text style={styles.resultsTitle}>Wins</Text>
+                  <Text style={styles.resultsCount}>0</Text>
+               </View>
+
+               <View style={styles.resultsBox}>
+                  <Text style={styles.resultsTitle}>Draws</Text>
+                  <Text style={styles.resultsCount}>0</Text>
+               </View>
+
+               <View style={styles.resultsBox}>
+                  <Text style={styles.resultsTitle}>Losses</Text>
+                  <Text style={styles.resultsCount}>0</Text>
+               </View>
+            </View>
+
             <Board
                disabled={Boolean(isTerminal(state)) || turn !== 'HUMAN'} // when board game is terminal, then player should be disabled
                onCellPressed={(cell) => {
@@ -141,6 +162,11 @@ export default function SinglePlayerGame(): ReactElement {
                gameResult={gameResult}
                size={SCREEN_WIDTH - 60}
             />
+
+            <View style={styles.modal}>
+               <Text style={styles.modalText}>You Won</Text>
+               <Button title="Play Again" />
+            </View>
          </SafeAreaView>
       </GradientBackground>
    );
