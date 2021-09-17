@@ -1,11 +1,28 @@
-import React, { ReactElement } from 'react';
-
-import { View, Text } from 'react-native';
+import React, { ReactElement, useRef } from 'react';
+import { ScrollView, TextInput as NativeTextInput } from 'react-native';
+import { GradientBackground, TextInput } from '@components';
+import styles from './login.styles';
 
 export default function Login(): ReactElement {
+   const passwordRef = useRef<NativeTextInput | null>(null);
    return (
-      <View>
-         <Text>Login</Text>
-      </View>
+      <GradientBackground>
+         <ScrollView contentContainerStyle={styles.container}>
+            <TextInput
+               returnKeyType="next"
+               placeholder="Username"
+               style={{ marginBottom: 20 }}
+               onSubmitEditing={() => {
+                  passwordRef.current?.focus();
+               }}
+            />
+            <TextInput
+               ref={passwordRef}
+               returnKeyType="done"
+               secureTextEntry
+               placeholder="Password"
+            />
+         </ScrollView>
+      </GradientBackground>
    );
 }
