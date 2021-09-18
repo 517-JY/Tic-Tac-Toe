@@ -197,7 +197,11 @@ export default function SinglePlayerGame(): ReactElement {
                      {getWinner(gameResult.winner) === 'BOT' && 'You Lost'}
                      {getWinner(gameResult.winner) === 'DRAW' && "It's a Draw"}
                   </Text>
-                  <Button onPress={newGame} title="Play Again" />
+                  <Button
+                     loading={false}
+                     onPress={newGame}
+                     title="Play Again"
+                  />
                </View>
             )}
          </SafeAreaView>
