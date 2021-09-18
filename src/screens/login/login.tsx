@@ -9,8 +9,8 @@ export default function Login(): ReactElement {
    const passwordRef = useRef<NativeTextInput | null>(null);
    // Create state object to obtain the user form info
    const [form, setForm] = useState({
-      username: '',
-      password: '',
+      username: 'test',
+      password: '12345678',
    });
 
    const setFormInput = (key: keyof typeof form, value: string) => {
